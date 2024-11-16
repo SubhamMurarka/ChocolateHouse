@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seasonal Flavors</title>
+</head>
+<body>
+    <h1>Seasonal Flavors</h1>
+    <ul>
+        {% for flavor in flavors %}
+            <li>{{ flavor.name }}: {{ flavor.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

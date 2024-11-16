@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Suggestions</title>
+</head>
+<body>
+    <h1>Customer Suggestions</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="customer_name">Your Name:</label><br>
+        <input type="text" id="customer_name" name="customer_name"><br><br>
+
+        <label for="flavor_suggestion">Flavor Suggestion:</label><br>
+        <input type="text" id="flavor_suggestion" name="flavor_suggestion"><br><br>
+
+        <label for="allergy_concerns">Allergy Concerns:</label><br>
+        <textarea id="allergy_concerns" name="allergy_concerns"></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
