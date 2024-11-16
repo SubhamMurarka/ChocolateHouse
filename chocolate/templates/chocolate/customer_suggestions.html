@@ -2,24 +2,123 @@
 <html>
 <head>
     <title>Customer Suggestions</title>
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #673AB7;
+            margin-top: 20px;
+        }
+        /* Suggestions List Styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            width: 70%;
+        }
+        ul li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        ul li strong {
+            font-weight: 600;
+            color: #673AB7;
+        }
+        ul li div {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        ul li a {
+            margin-top: 10px;
+            text-decoration: none;
+            color: #ff5722;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        /* Form Styles */
+        form {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        form button {
+            background-color: #673AB7;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #5E35B1;
+        }
+    </style>
 </head>
 <body>
     <h1>Customer Suggestions</h1>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+    
+    <!-- List of customer suggestions -->
+    <ul>
+        {% for suggestion in suggestions %}
+            <li>
+                <strong>{{ suggestion.customer_name }}</strong>
+                <div>Suggestion: {{ suggestion.flavor_suggestion }}</div>
+                <div>Allergy Concerns: {{ suggestion.allergy_concerns }}</div>
+                <a href="{% url 'update_customer_suggestion' suggestion.id %}">Edit</a>
+                <a href="{% url 'delete_customer_suggestion' suggestion.id %}" onclick="return confirm('Are you sure you want to delete this suggestion?');">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to submit a new suggestion -->
     <form method="post">
         {% csrf_token %}
-        <label for="customer_name">Your Name:</label><br>
-        <input type="text" id="customer_name" name="customer_name"><br><br>
-
-        <label for="flavor_suggestion">Flavor Suggestion:</label><br>
-        <input type="text" id="flavor_suggestion" name="flavor_suggestion"><br><br>
-
-        <label for="allergy_concerns">Allergy Concerns:</label><br>
-        <textarea id="allergy_concerns" name="allergy_concerns"></textarea><br><br>
-
-        <button type="submit">Submit</button>
+        <label for="customer_name">Your Name:</label>
+        <input type="text" name="customer_name" id="customer_name" placeholder="Enter your name" required>
+        <label for="flavor_suggestion">Flavor Suggestion:</label>
+        <textarea name="flavor_suggestion" id="flavor_suggestion" rows="3" placeholder="Enter your flavor suggestion" required></textarea>
+        <label for="allergy_concerns">Allergy Concerns:</label>
+        <textarea name="allergy_concerns" id="allergy_concerns" rows="2" placeholder="List any allergy concerns"></textarea>
+        <button type="submit">Submit Suggestion</button>
     </form>
 </body>
 </html>
